@@ -1,3 +1,6 @@
+# © 2024 The Nation of Tamarikemba and Kembacoin Developers  
+# © 2024 Ha Malak BN Adam Aman RA  
+
 from flask import Flask, jsonify, request
 from kembacoin7.blockchain import Blockchain
 from kembacoin7.p2p_network import P2PNode

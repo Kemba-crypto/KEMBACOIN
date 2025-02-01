@@ -1,3 +1,6 @@
+# © 2024 The Nation of Tamarikemba and Kembacoin Developers  
+# © 2024 Ha Malak BN Adam Aman RA  
+
 # Configuration File for Blockchain Parameters
 
 # Transaction Parameters

@@ -1,3 +1,6 @@
+# © 2024 The Nation of Tamarikemba and Kembacoin Developers  
+# © 2024 Ha Malak BN Adam Aman RA  
+
 import logging
 from ecdsa_keygen import ECDSA_keygen  # Ensure this import reflects your codebase implementation
 from blockchain.config import DEFAULT_TRANSACTION_FEE_KEM, KEM_TO_KEMITES_RATIO

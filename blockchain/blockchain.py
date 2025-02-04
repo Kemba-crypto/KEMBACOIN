@@ -172,17 +172,39 @@ class Blockchain:
         self.pending_transactions.clear()
         logging.info(f"Block {new_block.index} mined by {miner_wallet_address}")
 
-    def anchor_to_bitcoin(self):
-    if not self.bitcoin_rpc:
-        logging.warning("Bitcoin RPC is not available.")
-        return None
+    def anchor_to_bitcoin(self, data):
+        if not self.bitcoin_rpc:
+            logging.warning("Bitcoin RPC is not available.")
+            return False
 
-    try:
-        latest_block_hash = self.bitcoin_rpc.getbestblockhash()  # Fetch Bitcoin's latest block hash
-        logging.info(f"Latest Bitcoin Block Hash used for anchoring: {latest_block_hash}")
-        return latest_block_hash
-    except JSONRPCException as e:
-        logging.error(f"Failed to fetch Bitcoin anchor: {e}")
-        return None
- 
+        try:
+            data_hex = data.encode().hex()
+            txid = self.bitcoin_rpc.createrawtransaction(inputs=[], outputs={"data": data_hex})
+            signed_tx = self.bitcoin_rpc.signrawtransactionwithwallet(txid)
+            txid = self.bitcoin_rpc.sendrawtransaction(signed_tx["hex"])
+            logging.info(f"Data anchored to Bitcoin blockchain. TXID: {txid}")
+            return txid
+        except JSONRPCException as e:
+            logging.error(f"Failed to anchor data to Bitcoin: {e}")
+            return False
+            
+    def get_balance(self, wallet_address):
+        balance = 0
+    
+        # Check transactions in blocks
+        for block in self.chain:
+            for transaction in block.transactions:
+                if transaction['recipient'] == wallet_address:
+                    balance += transaction['amount_kem']
+                if transaction['sender'] == wallet_address:
+                    balance -= transaction['amount_kem']
+    
+        # Check pending transactions (if any)
+        for transaction in self.pending_transactions:
+            if transaction['recipient'] == wallet_address:
+                balance += transaction['amount_kem']
+            if transaction['sender'] == wallet_address:
+                balance -= transaction['amount_kem']
+    
+        return balance
 

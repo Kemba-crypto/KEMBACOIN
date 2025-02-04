@@ -1,3 +1,6 @@
+# © 2024 The Nation of Tamarikemba and Kembacoin Developers  
+# © 2024 Ha Malak BN Adam Aman RA  
+
 from ecdsa_keygen import ECDSA_keygen  # Import the ECDSA_keygen class for signing and verification
 
 

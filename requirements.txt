@@ -1,0 +1,10 @@
+tkinter
+PIL
+qrcode
+cryptography.hazmat.backends
+cryptography.hazmat.primitives.kdf.pbkdf2
+cryptography.hazmat.primitives.hashes
+ecdsa_keygen
+mnemonic
+qrcode.console_scripts
+threading
